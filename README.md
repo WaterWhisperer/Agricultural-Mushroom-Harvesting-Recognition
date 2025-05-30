@@ -1,8 +1,8 @@
-# Agricultural Mushroom Harvesting Recognition
+# 农业蘑菇收割识别项目
 
 This is a project for recognizing agricultural mushroom harvesting images.
 
-## Project Structure
+## 项目结构
 
 ```plaintext
 .
@@ -13,3 +13,9 @@ This is a project for recognizing agricultural mushroom harvesting images.
 ├── run.sh #启动脚本
 └── README.md #说明启动流程 
 ```
+
+## 环境要求
+
+- Python 3.8+
+- ultralytics
+- OpenCV
