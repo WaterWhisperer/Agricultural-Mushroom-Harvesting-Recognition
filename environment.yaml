@@ -1,7 +1,8 @@
 name: mushroom-env
 channels:
-  - conda-forge
-  - defaults
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 dependencies:
   - python=3.8
   - pip
