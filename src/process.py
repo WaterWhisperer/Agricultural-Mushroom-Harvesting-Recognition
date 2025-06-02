@@ -3,7 +3,7 @@ import time
 from ultralytics import YOLO
 
 # Load YOLO model
-model = YOLO("", use_cpu=True)
+model = YOLO("", verbose=False)
 
 #
 #参数:

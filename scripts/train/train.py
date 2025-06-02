@@ -24,7 +24,9 @@ def main():
         epochs=args.epochs,
         imgsz=args.imgsz,
         batch=args.batch,
-        name=f"{args.name}_custom_train"
+        name=f"{args.name}_custom_train",
+        patience=10,  # 早停机制，10个epoch验证集指标无提升则停止
+        weight_decay=0.0005  # L2正则化
     )
 
 if __name__ == "__main__":

@@ -99,47 +99,24 @@ def get_augmentation_pipeline(mode='train'):
     if mode == 'train':
         # 训练集使用更强的增强
         return A.Compose([
-            # 几何变换 - 更激进
-            A.HorizontalFlip(p=0.7),
-            A.VerticalFlip(p=0.5),
-            A.Rotate(limit=45, p=0.8, border_mode=cv2.BORDER_CONSTANT),
-            A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.3, rotate_limit=30, p=0.8),
-            A.RandomResizedCrop(height=512, width=512, scale=(0.6, 1.0), ratio=(0.6, 1.4), p=0.7),
-            A.Perspective(scale=(0.05, 0.1), p=0.3),
-            A.PiecewiseAffine(scale=(0.01, 0.05), p=0.2),
+            # 几何变换 - 更温和
+            A.HorizontalFlip(p=0.5),
+            A.VerticalFlip(p=0.3),
+            A.Rotate(limit=30, p=0.5, border_mode=cv2.BORDER_CONSTANT),
+            A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1, rotate_limit=15, p=0.5),
+            A.RandomResizedCrop(height=512, width=512, scale=(0.8, 1.0), ratio=(0.8, 1.2), p=0.5),
             
-            # 颜色变换 - 更广范围
-            A.RandomBrightnessContrast(brightness_limit=0.3, contrast_limit=0.3, p=0.8),
-            A.HueSaturationValue(hue_shift_limit=40, sat_shift_limit=50, val_shift_limit=40, p=0.8),
-            A.RGBShift(r_shift_limit=50, g_shift_limit=50, b_shift_limit=50, p=0.7),
-            A.ToGray(p=0.3),
-            A.CLAHE(p=0.3),
-            A.RandomGamma(gamma_limit=(80, 120), p=0.3),
+            # 颜色变换
+            A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p=0.7),
+            A.HueSaturationValue(hue_shift_limit=20, sat_shift_limit=30, val_shift_limit=20, p=0.7),
+            A.ToGray(p=0.2),
             
-            # 噪声和模糊 - 更多样
+            # 噪声和模糊
             A.OneOf([
-                A.GaussianBlur(blur_limit=(3, 7)),
-                A.MotionBlur(blur_limit=11),
-                A.MedianBlur(blur_limit=5),
-            ], p=0.7),
-            A.OneOf([
-                A.GaussNoise(var_limit=(10.0, 50.0)),
-                A.ISONoise(color_shift=(0.01, 0.1), intensity=(0.1, 0.5)),
-                A.MultiplicativeNoise(multiplier=(0.9, 1.1), per_channel=True),
-            ], p=0.7),
-            
-            # 天气效果
-            A.OneOf([
-                A.RandomFog(fog_coef_lower=0.1, fog_coef_upper=0.3, alpha_coef=0.08),  # type: ignore
-                A.RandomSunFlare(flare_roi=(0, 0, 1, 0.5), angle_lower=0.5),  # type: ignore
-                A.RandomShadow(num_shadows_lower=1, num_shadows_upper=3, shadow_dimension=5, shadow_roi=(0, 0.5, 1, 1)),
-                A.RandomSnow(snow_point_lower=0.1, snow_point_upper=0.3, brightness_coeff=2.5),
-                A.RandomRain(slant_lower=-10, slant_upper=10, drop_length=20, drop_width=1, drop_color=(200, 200, 200)),
-            ], p=0.4),
-            
-            # 高级增强
-            A.ElasticTransform(alpha=50, sigma=10, alpha_affine=10, p=0.3),
-            A.OpticalDistortion(distort_limit=0.2, shift_limit=0.1, p=0.3),
+                A.GaussianBlur(blur_limit=(3, 5)),
+                A.MedianBlur(blur_limit=3),
+            ], p=0.5),
+            A.GaussNoise(var_limit=(10.0, 30.0), p=0.4),
         ], bbox_params=A.BboxParams(format='pascal_voc', label_fields=['labels']))
     else:
         # 验证集使用较温和的增强

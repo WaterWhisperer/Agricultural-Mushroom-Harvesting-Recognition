@@ -15,31 +15,31 @@ for model in "${MODELS[@]}"; do
     # 设置参数（可根据不同模型调整参数）
     case $model in
         "yolov8n")
-            epochs=120
+            epochs=80
             batch=16
             imgsz=640
             weights_type=".pt"
             ;;
         "yolo11n")
-            epochs=120
+            epochs=80
             batch=16
             imgsz=640
             weights_type=".pt"
             ;;
         "yolov8s")
-            epochs=120
+            epochs=80
             batch=16
             imgsz=640
             weights_type=".pt"
             ;;
         "yolo11s")
-            epochs=120
+            epochs=80
             batch=16
             imgsz=640
             weights_type=".pt"
             ;;
         *)
-            epochs=200
+            epochs=100
             batch=8
             imgsz=640 
             weights_type=".pt"
