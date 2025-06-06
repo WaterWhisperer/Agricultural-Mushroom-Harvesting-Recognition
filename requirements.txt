@@ -1,0 +1,13 @@
+# 蘑菇识别系统依赖项
+# 安装命令: pip install -r requirements.txt
+
+# 基础依赖
+ultralytics
+opencv-python
+numpy
+
+# 使用国内源加速安装：
+# pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# PyTorch需要单独安装（CPU版本）：
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu

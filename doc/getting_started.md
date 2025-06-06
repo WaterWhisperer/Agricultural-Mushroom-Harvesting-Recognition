@@ -40,7 +40,7 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
 ### 3. 准备测试图片
 
-将测试图片放入data/input/目录
+将测试图片放入`data/input/`目录
 
 ### 4. 运行系统
 
