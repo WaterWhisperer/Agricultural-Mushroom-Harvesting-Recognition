@@ -37,13 +37,13 @@ def detect_pictures(model_path, input_folder, output_image_folder, output_txt_pa
             detection_results[filename] = detection_list
             print(f"处理完成: {filename} -> 检测到 {len(detection_list)} 个目标")
 
-    # 使用官方的格式：带制表符缩进，每行一个键值对
+    # 使用官方要求的格式保存结果（带空格）
     with open(output_txt_path, 'w', encoding='utf-8') as f:
         f.write('{\n')
         items = []
         for filename, detections in detection_results.items():
-            # 将检测列表转换为紧凑JSON格式（无空格）
-            detections_str = json.dumps(detections, ensure_ascii=False, separators=(',', ':'))
+            # 使用默认JSON序列化（冒号后和逗号后有空格）
+            detections_str = json.dumps(detections, ensure_ascii=False)
             items.append(f'\t"{filename}": {detections_str}')
         f.write(',\n'.join(items))
         f.write('\n}')
