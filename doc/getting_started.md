@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ### 3. 准备测试图片
 
-将测试图片放入`data/images/`目录
+将测试图片放入 `data/images/`目录
 
 ### 4. 运行系统
 
@@ -46,9 +46,8 @@ python src/YOLO-Mushroom-Recognization.py
 # 使用默认配置运行性能测试
 python src/process.py
 
-# 自定义性能测试参数
+# 自定义输入图像目录参数
 python src/process.py \
-  --model_path weights/mushroom_11s.pt \
   --input_dir custom_imgs
 ```
 
