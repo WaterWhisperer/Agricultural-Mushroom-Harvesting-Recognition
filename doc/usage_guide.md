@@ -1,93 +1,141 @@
 # 蘑菇识别系统使用指南
 
-## 基本使用
+## 主程序参数详解
 
-### 1. 快速启动
+### 参数列表
 
-```bash
-bash run.sh
-```
+| 参数名 | 类型 | 默认值 | 描述 |
+|--------|------|--------|------|
+| `--model_path` | str | `weights/mushroom_v8n.pt` | 模型文件路径 |
+| `--source` | str | `dir` | 输入源类型：`dir`(目录图片) 或 `camera`(摄像头) |
+| `--input_dir` | str | `data/images/` | 输入图片目录 (当source=dir时有效) |
+| `--output_file` | str | `output.txt` | 输出文件名 (当source=dir时有效) |
+| `--camera_id` | int | `0` | 摄像头设备ID |
+| `--show` | bool | `False` | 实时显示检测画面 |
+| `--use_cpu` | bool | `True` | 使用CPU推理 |
 
-这将使用默认配置运行系统：
-
-- 使用`weights/mushroom_v8n.pt`模型
-- 自动检测`data/images/`目录中的图片
-- 结果保存到`output.txt`
-
-### 2. 指定模型
-
-```bash
-python src/YOLO-Mushroom-Recognization.py --model_path weights/mushroom_11s.pt
-```
-
-可用的模型文件：
-
-- `mushroom_v8n.pt` (默认)
-- `mushroom_v8s.pt`
-- `mushroom_11n.pt`
-- `mushroom_11s.pt`
-
-### 3. 自定义输入/输出
+### 使用示例
 
 ```bash
+# 基本图片检测
+python src/YOLO-Mushroom-Recognization.py
+
+# 使用v8s模型检测自定义目录
 python src/YOLO-Mushroom-Recognization.py \
+  --model_path weights/mushroom_v8s.pt \
   --input_dir custom_imgs \
   --output_file custom_output.json
+
+# 摄像头检测（显示画面）
+python src/YOLO-Mushroom-Recognization.py \
+  --source camera \
+  --show
 ```
 
-## 高级功能
+## 辅助脚本使用指南
 
-### 性能测试
+### 数据增强
 
 ```bash
-python src/process.py
+# 进入数据增强环境
+cd scripts/data_augmentation
+conda env create -f environment.yaml
+
+# 运行数据增强脚本
+python data_augmentation.py \
+  --input_dir data/raw/images \
+  --output_dir data/augmented \
+  --augmentations rotate flip color
 ```
 
-测试所有图片的处理时间并输出统计信息：
+支持的数据增强操作：
 
-- 平均处理时间
-- 最大处理时间
-- 最小处理时间
+- `rotate`：随机旋转（-30°至30°）
+- `flip`：水平/垂直翻转
+- `color`：颜色调整（亮度、对比度、饱和度）
+- `noise`：添加高斯噪声
+- `blur`：高斯模糊
 
-### 模型评估
+### 模型训练
+
+```bash
+# 启动训练
+bash scripts/train/train.sh \
+  --model yolov8n.pt \
+  --data data/data.yaml \
+  --epochs 100 \
+  --imgsz 640
+```
+
+训练参数：
+
+- `--model`：基础模型架构
+- `--data`：数据配置文件路径
+- `--epochs`：训练轮数
+- `--imgsz`：输入图片尺寸
+- `--batch`：批次大小（根据显存调整）
+
+### 模型评估工具
 
 ```bash
 python scripts/tools/evaluate_models.py \
   --gt data/raw/图片对应输出结果.txt \
   --models data/test/detections_v8n.txt data/test/detections_v8s.txt \
-  --names v8n v8s
+  --names v8n v8s \
 ```
 
-评估不同模型在测试集上的性能：
+评估指标：
 
 - 精确率(Precision)
 - 召回率(Recall)
 - F1分数
+- mAP@0.5
+- 推理速度(FPS)
 
-### 模型导出(ONNX格式)
+### 标注转换工具
 
 ```bash
-python scripts/tools/export_onnx.py \
-  --model weights/mushroom_v8n.pt \
-  --output weights/mushroom_v8n.onnx
+# JSON转YOLO格式
+python scripts/tools/json2txt.py
 ```
 
-导出模型为ONNX格式，便于在边缘设备部署。
+### 模型转换工具
+
+```bash
+# 导出为ONNX格式
+python scripts/tools/export_onnx.py \
+  --model weights/mushroom_v8n.pt \
+  --output weights/mushroom_v8n.onnx 
+```
+
+## 性能优化
+
+### 内存优化
+
+- 使用`--half`参数启用半精度推理
+- 减小`--imgsz`参数值（如从640降至416）
+- 使用更小的模型架构（如yolov8n）
 
 ## 常见问题解决
 
-### 图片处理失败
+### 摄像头无法打开
 
-如果出现`FileNotFoundError`错误：
+**症状**：`无法打开摄像头 (ID: 0)`  
+**解决方案**：
 
-1. 确认图片路径正确
-2. 检查文件权限
-3. 验证图片格式（支持JPG、PNG等常见格式）
+1. 检查摄像头连接
+2. 尝试不同摄像头ID（0,1,2等）
+3. 在Linux系统添加用户到video组：
 
-### 性能优化
+   ```bash
+   sudo usermod -aG video $USER
+   ```
 
-在低性能设备上：
+### 性能问题
 
-1. 使用更小的模型（如`mushroom_v8n.pt`）
-2. 降低图片分辨率（修改代码中的`imgsz`参数）
-3. 使用`--half`参数启用半精度推理（如果设备支持）
+**症状**：处理速度慢  
+**优化方案**：
+
+1. 使用量化模型：`--model_path weights/mushroom_v8n_quant.pt`
+2. 启用半精度：添加`--half`参数
+3. 减小图片尺寸：修改代码中的`imgsz`参数

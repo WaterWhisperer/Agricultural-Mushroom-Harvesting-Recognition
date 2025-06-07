@@ -43,7 +43,13 @@ python src/YOLO-Mushroom-Recognization.py
 ## 性能测试
 
 ```bash
+# 使用默认配置运行性能测试
 python src/process.py
+
+# 自定义性能测试参数
+python src/process.py \
+  --model_path weights/mushroom_11s.pt \
+  --input_dir custom_imgs
 ```
 
 成功运行后将显示每张图片的处理时间和性能统计。

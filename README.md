@@ -9,12 +9,6 @@
 - ultralytics
 - OpenCV
 
-## 安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
 ## 项目结构
 
 ```plaintext
@@ -65,9 +59,11 @@ python src/YOLO-Mushroom-Recognization.py
 
 ### 5. 查看结果
 
-识别结果将保存在 `output.txt` 文件中，格式符合官方要求。
+识别结果将保存在 `output.txt` 文件中。
 
 ## 高级选项
+
+详见[doc/usage_guide.md](https://github.com/WaterWhisperer/Agricultural-Mushroom-Harvesting-Recognition/blob/main/doc/usage_guide.md)
 
 ### 指定模型
 
@@ -84,7 +80,7 @@ python src/process.py
 ## 模型评估
 
 ```bash
-python scripts/evaluate_models.py \
+python scripts/tools/evaluate_models.py \
   --gt data/raw/图片对应输出结果.txt \
   --models data/test/detections_v8n.txt data/test/detections_v8s.txt \
   --names v8n v8s
