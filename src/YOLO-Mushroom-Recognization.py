@@ -53,7 +53,7 @@ def main():
         # 处理每张图片
         for img_path in img_paths:
             img_name = os.path.basename(img_path)
-            mushroom_list = process_img(img_path, model, device)
+            mushroom_list = process_img(img_path)
             results[img_name] = mushroom_list
             print(f"处理完成: {img_name} -> 检测到 {len(mushroom_list)} 个目标")
     
@@ -80,7 +80,7 @@ def main():
             img_name = f"frame_{frame_count:04d}.jpg"
             
             # 处理当前帧
-            mushroom_list = process_img(frame, model, device)
+            mushroom_list = process_img(frame)
             results[img_name] = mushroom_list
             
             # 在画面上绘制检测结果

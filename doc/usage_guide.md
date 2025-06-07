@@ -4,19 +4,20 @@
 
 ### 参数列表
 
-| 参数名 | 类型 | 默认值 | 描述 |
-|--------|------|--------|------|
-| `--model_path` | str | `weights/mushroom_v8n.pt` | 模型文件路径 |
-| `--source` | str | `dir` | 输入源类型：`dir`(目录图片) 或 `camera`(摄像头) |
-| `--input_dir` | str | `data/images/` | 输入图片目录 (当source=dir时有效) |
-| `--output_file` | str | `output.txt` | 输出文件名 (当source=dir时有效) |
-| `--camera_id` | int | `0` | 摄像头设备ID |
-| `--show` | bool | `False` | 实时显示检测画面 |
-| `--use_cpu` | bool | `True` | 使用CPU推理 |
+| 参数名            | 类型 | 默认值                      | 描述                                                |
+| ----------------- | ---- | --------------------------- | --------------------------------------------------- |
+| `--model_path`  | str  | `weights/mushroom_v8n.pt` | 模型文件路径                                        |
+| `--source`      | str  | `dir`                     | 输入源类型：`dir`(目录图片) 或 `camera`(摄像头) |
+| `--input_dir`   | str  | `data/images/`            | 输入图片目录 (当source=dir时有效)                   |
+| `--output_file` | str  | `output.txt`              | 输出文件名 (当source=dir时有效)                     |
+| `--camera_id`   | int  | `0`                       | 摄像头设备ID                                        |
+| `--show`        | bool | `False`                   | 实时显示检测画面                                    |
+| `--use_cpu`     | bool | `True`                    | 使用CPU推理                                         |
 
 ### 使用示例
 
 ```bash
+
 # 基本图片检测
 python src/YOLO-Mushroom-Recognization.py
 
@@ -29,6 +30,7 @@ python src/YOLO-Mushroom-Recognization.py \
 # 摄像头检测（显示画面）
 python src/YOLO-Mushroom-Recognization.py \
   --source camera \
+  --camera_id 0 \
   --show
 ```
 
@@ -37,12 +39,11 @@ python src/YOLO-Mushroom-Recognization.py \
 ### 数据增强
 
 ```bash
-# 进入数据增强环境
-cd scripts/data_augmentation
-conda env create -f environment.yaml
+# 创建数据增强环境
+conda env create -f scripts/data_augmentation/environment.yaml
 
 # 运行数据增强脚本
-python data_augmentation.py \
+python scripts/data_augmentation/data_augmentation.py \
   --input_dir data/raw/images \
   --output_dir data/augmented \
   --augmentations rotate flip color
@@ -112,16 +113,15 @@ python scripts/tools/export_onnx.py \
 
 ### 内存优化
 
-- 使用`--half`参数启用半精度推理
-- 减小`--imgsz`参数值（如从640降至416）
+- 使用 `--half`参数启用半精度推理
+- 减小 `--imgsz`参数值（如从640降至416）
 - 使用更小的模型架构（如yolov8n）
 
 ## 常见问题解决
 
 ### 摄像头无法打开
 
-**症状**：`无法打开摄像头 (ID: 0)`  
-**解决方案**：
+**症状**：`无法打开摄像头 (ID: 0)`**解决方案**：
 
 1. 检查摄像头连接
 2. 尝试不同摄像头ID（0,1,2等）
@@ -133,9 +133,8 @@ python scripts/tools/export_onnx.py \
 
 ### 性能问题
 
-**症状**：处理速度慢  
-**优化方案**：
+**症状**：处理速度慢**优化方案**：
 
 1. 使用量化模型：`--model_path weights/mushroom_v8n_quant.pt`
-2. 启用半精度：添加`--half`参数
-3. 减小图片尺寸：修改代码中的`imgsz`参数
+2. 启用半精度：添加 `--half`参数
+3. 减小图片尺寸：修改代码中的 `imgsz`参数

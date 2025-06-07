@@ -36,8 +36,9 @@ cd Agricultural-Mushroom-Harvesting-Recognition
 ### 2. 配置环境与安装依赖
 
 ```bash
-# 创建conda环境
+# 创建conda环境并激活
 conda create -n mushroom python=3.11
+conda activate mushroom
 
 # 安装依赖
 pip install -r requirements.txt
@@ -45,16 +46,13 @@ pip install -r requirements.txt
 
 ### 3. 准备测试图片
 
-将测试图片放入`data/images/`目录
+将测试图片放入 `data/images/`目录
 
 ### 4. 运行系统
 
 ```bash
 # 使用默认配置运行（自动使用CPU模式）
-bash run.sh
-
-# 或手动运行主程序
-python src/YOLO-Mushroom-Recognization.py
+bash run.sh data/images
 ```
 
 ### 5. 查看结果
@@ -63,7 +61,7 @@ python src/YOLO-Mushroom-Recognization.py
 
 ## 高级选项
 
-详见[doc/usage_guide.md](https://github.com/WaterWhisperer/Agricultural-Mushroom-Harvesting-Recognition/blob/main/doc/usage_guide.md)
+详见[doc/usage_guide.md](doc/usage_guide.md)
 
 ### 指定模型
 
@@ -80,6 +78,11 @@ python src/process.py
 ## 模型评估
 
 ```bash
+#第一步
+#先解压raw.zip获取“图片对应输出结果.txt”
+
+#第二步
+#执行程序获取模型评估结果
 python scripts/tools/evaluate_models.py \
   --gt data/raw/图片对应输出结果.txt \
   --models data/test/detections_v8n.txt data/test/detections_v8s.txt \

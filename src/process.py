@@ -10,20 +10,22 @@ from ultralytics import YOLO
 #返回:
 #   返回结果为各赛题中要求的识别结果，具体格式可参考提供压缩包中的 “图片对应输出结果.txt” 中一张图片对应的结果
 #
-def process_img(img_path, model, device=None):
+def process_img(img_path):
     """
     处理单张图片的蘑菇检测
     :param img_path: 图片路径
-    :param model: 已加载的YOLO模型对象
-    :param device: 设备类型（'cpu'或None）
     :return: 检测结果列表
     """
-    # 兼容旧版布尔参数
-    if isinstance(device, bool):
-        device = "cpu" if device else None
-    
+    # 模型路径
+    model_path = 'weights/mushroom_v8n.pt'
+
+    # 只在第一次调用时加载模型
+    if not hasattr(process_img, "model"):
+        model_path = 'weights/mushroom_v8n.pt'
+        process_img.model = YOLO(model_path)
+
     # 执行检测
-    results = model(img_path, device=device)
+    results = process_img.model(img_path, device="cpu")
     
     # 提取检测框信息
     boxes = results[0].boxes.xywh.cpu().numpy()
@@ -37,7 +39,7 @@ def process_img(img_path, model, device=None):
 import argparse
 
 # 性能测试主函数
-def performance_test(model_path, input_dir, use_cpu=True):
+def performance_test(input_dir):
     # 确保图片目录存在
     if not os.path.exists(input_dir):
         print(f"错误: 输入目录不存在 - {input_dir}")
@@ -59,8 +61,6 @@ def performance_test(model_path, input_dir, use_cpu=True):
     max_time = 0
     min_time = now()
     
-    # 加载模型
-    model = YOLO(model_path)
     
     for img_path in img_paths:
         # 构建完整图片路径
@@ -68,7 +68,7 @@ def performance_test(model_path, input_dir, use_cpu=True):
         print(f"处理图片: {full_img_path}")
         
         last_time = now()
-        result = process_img(full_img_path, model, "cpu" if use_cpu else None)
+        result = process_img(full_img_path)
         run_time = now() - last_time
         
         print(f"检测到 {len(result)} 个蘑菇, 耗时: {run_time} ms\n")
@@ -96,4 +96,4 @@ if __name__=='__main__':
                         help='使用CPU推理 (默认: True)')
     args = parser.parse_args()
     
-    performance_test(args.model_path, args.input_dir, args.use_cpu)
+    performance_test(args.input_dir)

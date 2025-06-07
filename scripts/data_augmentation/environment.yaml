@@ -1,4 +1,4 @@
-name: mushroom-env
+name: mushroom-augmentation
 channels:
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
@@ -6,7 +6,6 @@ channels:
 dependencies:
   - python=3.8
   - pip
-  - opencv
   - numpy
   - tqdm
   - pip:
