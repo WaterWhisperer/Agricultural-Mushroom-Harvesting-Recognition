@@ -4,15 +4,13 @@
 
 ### 参数列表
 
-| 参数名            | 类型 | 默认值                      | 描述                                                |
-| ----------------- | ---- | --------------------------- | --------------------------------------------------- |
-| `--model_path`  | str  | `weights/mushroom_v8n.pt` | 模型文件路径                                        |
-| `--source`      | str  | `dir`                     | 输入源类型：`dir`(目录图片) 或 `camera`(摄像头) |
-| `--input_dir`   | str  | `data/images/`            | 输入图片目录 (当source=dir时有效)                   |
-| `--output_file` | str  | `output.txt`              | 输出文件名 (当source=dir时有效)                     |
-| `--camera_id`   | int  | `0`                       | 摄像头设备ID                                        |
-| `--show`        | bool | `False`                   | 实时显示检测画面                                    |
-| `--use_cpu`     | bool | `True`                    | 使用CPU推理                                         |
+| 参数名            | 类型 | 默认值           | 描述                                                |
+| ----------------- | ---- | ---------------- | --------------------------------------------------- |
+| `--source`      | str  | `dir`          | 输入源类型：`dir`(目录图片) 或 `camera`(摄像头) |
+| `--input_dir`   | str  | `data/images/` | 输入图片目录 (当source=dir时有效)                   |
+| `--output_file` | str  | `output.txt`   | 输出文件名 (当source=dir时有效)                     |
+| `--camera_id`   | int  | `0`            | 摄像头设备ID                                        |
+| `--show`        | bool | `False`        | 实时显示检测画面                                    |
 
 ### 使用示例
 
@@ -23,9 +21,7 @@ python src/YOLO-Mushroom-Recognization.py
 
 # 使用v8s模型检测自定义目录
 python src/YOLO-Mushroom-Recognization.py \
-  --model_path weights/mushroom_v8s.pt \
   --input_dir custom_imgs \
-  --output_file custom_output.json
 
 # 摄像头检测（显示画面）
 python src/YOLO-Mushroom-Recognization.py \
@@ -76,7 +72,7 @@ bash scripts/train/train.sh \
 - `--imgsz`：输入图片尺寸
 - `--batch`：批次大小（根据显存调整）
 
-### 模型评估工具
+### 模型评估工具（请按照实际路径修改参数）
 
 ```bash
 python scripts/tools/evaluate_models.py \
@@ -97,7 +93,7 @@ python scripts/tools/evaluate_models.py \
 
 ```bash
 # JSON转YOLO格式
-python scripts/tools/json2txt.py
+python scripts/tools/json2label.py
 ```
 
 ### 模型转换工具
@@ -109,9 +105,9 @@ python scripts/tools/export_onnx.py \
   --output weights/mushroom_v8n.onnx 
 ```
 
-## 性能优化
+## 性能优化（待实现）
 
-### 内存优化
+### 内存优化（待实现）
 
 - 使用 `--half`参数启用半精度推理
 - 减小 `--imgsz`参数值（如从640降至416）
@@ -131,7 +127,7 @@ python scripts/tools/export_onnx.py \
    sudo usermod -aG video $USER
    ```
 
-### 性能问题
+### 性能问题（待实现）
 
 **症状**：处理速度慢**优化方案**：
 

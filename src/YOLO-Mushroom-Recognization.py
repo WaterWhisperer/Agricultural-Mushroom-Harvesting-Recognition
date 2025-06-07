@@ -9,8 +9,8 @@ import argparse
 def main():
     # 创建参数解析器
     parser = argparse.ArgumentParser(description='蘑菇识别系统')
-    parser.add_argument('--model_path', type=str, default='weights/mushroom_v8n.pt', 
-                        help='模型文件路径 (默认: weights/mushroom_v8n.pt)')
+    # parser.add_argument('--model_path', type=str, default='weights/mushroom_v8n.pt', 
+    #                     help='模型文件路径 (默认: weights/mushroom_v8n.pt)')
     parser.add_argument('--source', type=str, default='dir', 
                         choices=['dir', 'camera'], help='输入源: dir(目录图片) 或 camera(摄像头) (默认: dir)')
     parser.add_argument('--input_dir', type=str, default='data/images/', 
@@ -21,8 +21,8 @@ def main():
                         help='摄像头设备ID (默认: 0)')
     parser.add_argument('--show', action='store_true', default=False,
                         help='实时显示检测画面 (默认: False)')
-    parser.add_argument('--use_cpu', action='store_true', default=True,
-                        help='使用CPU推理 (默认: True)')
+    # parser.add_argument('--use_cpu', action='store_true', default=True,
+    #                     help='使用CPU推理 (默认: True)')
     args = parser.parse_args()
     
     # 加载模型（只加载一次）

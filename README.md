@@ -1,6 +1,6 @@
 # 农业蘑菇收割识别项目
 
-本项目专注于蘑菇识别，专为CPU设备（如香橙派）优化，使用YOLO模型实现高效识别。
+本项目专注于蘑菇识别，使用YOLO模型实现高效识别。
 
 ## 环境要求
 
@@ -63,26 +63,20 @@ bash run.sh data/images
 
 详见[doc/usage_guide.md](doc/usage_guide.md)
 
-### 指定模型
-
-```bash
-python src/YOLO-Mushroom-Recognization.py --model_path weights/mushroom_v8n.pt
-```
-
 ### 性能测试
 
 ```bash
 python src/process.py
 ```
 
-## 模型评估
+### 模型评估
 
 ```bash
 #第一步
 #先解压raw.zip获取“图片对应输出结果.txt”
 
 #第二步
-#执行程序获取模型评估结果
+#执行程序获取模型评估结果（请按照实际路径更新参数）
 python scripts/tools/evaluate_models.py \
   --gt data/raw/图片对应输出结果.txt \
   --models data/test/detections_v8n.txt data/test/detections_v8s.txt \

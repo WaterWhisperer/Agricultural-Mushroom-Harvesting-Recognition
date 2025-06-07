@@ -88,12 +88,8 @@ def performance_test(input_dir):
 if __name__=='__main__':
     # 创建参数解析器
     parser = argparse.ArgumentParser(description='蘑菇识别系统性能测试')
-    parser.add_argument('--model_path', type=str, default='weights/mushroom_v8n.pt', 
-                        help='模型文件路径 (默认: weights/mushroom_v8n.pt)')
     parser.add_argument('--input_dir', type=str, default='data/images/', 
                         help='输入图片目录 (默认: data/images/)')
-    parser.add_argument('--use_cpu', action='store_true', default=True,
-                        help='使用CPU推理 (默认: True)')
     args = parser.parse_args()
     
     performance_test(args.input_dir)
