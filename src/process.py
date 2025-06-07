@@ -42,7 +42,7 @@ def process_img(img_path, model_path, use_cpu=True):
 #因此提交时请根据情况删除不必要的额外代码
 #
 if __name__=='__main__':
-    imgs_folder = 'data/input'
+    imgs_folder = 'data/images'
     # 确保图片目录存在
     if not os.path.exists(imgs_folder):
         os.makedirs(imgs_folder)

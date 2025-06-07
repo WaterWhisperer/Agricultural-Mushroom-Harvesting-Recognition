@@ -11,7 +11,7 @@ bash run.sh
 这将使用默认配置运行系统：
 
 - 使用`weights/mushroom_v8n.pt`模型
-- 自动检测`data/input/`目录中的图片
+- 自动检测`data/images/`目录中的图片
 - 结果保存到`output.txt`
 
 ### 2. 指定模型

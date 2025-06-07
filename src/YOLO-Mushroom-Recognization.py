@@ -4,7 +4,7 @@ from process import process_img
 
 def main():
     # 配置参数
-    imgs_folder = 'data/input'  # 输入图片目录
+    imgs_folder = 'data/images/'  # 输入图片目录
     output_file = 'output.txt'  # 输出文件名
     model_path = 'weights/mushroom_v8n.pt'  # 模型文件路径
     use_cpu = True  # 使用CPU推理

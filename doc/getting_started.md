@@ -3,9 +3,9 @@
 ## 系统要求
 
 - Linux操作系统（推荐Ubuntu 20.04+）
-- Python 3.8+
+- Python 3.8.20+
 - 至少2GB内存
-- 香橙派或类似ARM设备（仅支持CPU模式）
+- 香橙派或类似ARM设备
 
 ## 安装步骤
 
@@ -16,31 +16,19 @@ git clone https://github.com/WaterWhisperer/Agricultural-Mushroom-Harvesting-Rec
 cd Agricultural-Mushroom-Harvesting-Recognition
 ```
 
-### 2. 配置环境与安装依赖（两种方式）
-
-#### 方式一
-
-```bash
-# 创建并激活环境
-conda env create -f environment.yaml
-conda activate mushroom
-```
-
-#### 方式二
+### 2. 配置环境与安装依赖
 
 ```bash
 # 创建conda环境
 conda create -n mushroom python=3.11
 
 # 安装依赖
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-# 单独安装PyTorch CPU版本
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements.txt
 ```
 
 ### 3. 准备测试图片
 
-将测试图片放入`data/input/`目录
+将测试图片放入`data/images/`目录
 
 ### 4. 运行系统
 
