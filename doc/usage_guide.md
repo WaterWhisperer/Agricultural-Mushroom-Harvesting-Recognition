@@ -21,7 +21,7 @@ python src/YOLO-Mushroom-Recognization.py
 
 # 使用v8s模型检测自定义目录
 python src/YOLO-Mushroom-Recognization.py \
-  --input_dir custom_imgs \
+  --input_dir your/images/dir \
 
 # 摄像头检测（显示画面）
 python src/YOLO-Mushroom-Recognization.py \
@@ -35,8 +35,9 @@ python src/YOLO-Mushroom-Recognization.py \
 ### 数据增强
 
 ```bash
-# 创建数据增强环境
+# 创建数据增强环境并激活
 conda env create -f scripts/data_augmentation/environment.yaml
+conda activate mushroom-augmentation
 
 # 运行数据增强脚本
 python scripts/data_augmentation/data_augmentation.py \
@@ -109,12 +110,9 @@ python scripts/tools/json2label.py
   --image_height 480
 ```
 
-### 模型转换工具
+### 转换工具
 
 ```bash
-# 配置工具所需环境
-pip install onnx onnxsim onnxruntime
-
 # 导出为ONNX格式
 python scripts/tools/export_onnx.py \
   --pt_path weights/mushroom_v8n.pt \

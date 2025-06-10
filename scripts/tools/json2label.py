@@ -46,10 +46,10 @@ def convert_to_yolo(json_data, output_dir, image_width=640, image_height=480):
 if __name__ == "__main__":
     # 解析命令行参数
     parser = argparse.ArgumentParser(description="JSON转YOLO格式标注工具")
-    parser.add_argument('--json_file_path', required=True, help='JSON数据文件路径')
-    parser.add_argument('--output_dir', required=True, help='输出目录')
-    parser.add_argument('--image_width', required=True, help='图像宽度')
-    parser.add_argument('--image_height', required=True, help='图像高度')
+    parser.add_argument('--json_file_path',type=str, required=True, help='JSON数据文件路径')
+    parser.add_argument('--output_dir',type=str, required=True, help='输出目录')
+    parser.add_argument('--image_width',type=int, required=True, help='图像宽度')
+    parser.add_argument('--image_height',type=int, required=True, help='图像高度')
     args = parser.parse_args()
 
     # 读取JSON文件
@@ -61,4 +61,4 @@ if __name__ == "__main__":
     
     # 转换为YOLO格式
     # 注意: 需要根据实际情况设置正确的图像宽度和高度
-    convert_to_yolo(json_data, output_dir=args.output_dir, image_width=int(args.image_width), image_height=int(args.image_height))
+    convert_to_yolo(json_data, output_dir=args.output_dir, image_width=args.image_width, image_height=args.image_height)

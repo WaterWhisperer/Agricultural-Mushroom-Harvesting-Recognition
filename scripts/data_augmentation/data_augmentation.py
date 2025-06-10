@@ -228,11 +228,11 @@ def prepare_test_set(input_img_dir, input_label_dir, output_img_dir, output_labe
 if __name__ == "__main__":
     # 配置路径
     parser = argparse.ArgumentParser(description="蘑菇图片数据增强工具")
-    parser.add_argument('--input_images_dir', required=True, help='原始图像目录')
-    parser.add_argument('--input_labels_dir', required=True, help='原始标注目录') 
-    parser.add_argument('--output_dir', required=True, help='增强后数据集目录')
-    parser.add_argument('--augmentations_per_train_image', required=True, help='每张图片增强次数')
-    parser.add_argument('--augmentations_per_val_image', required=True, help='每张图片增强次数')
+    parser.add_argument('--input_images_dir', type=str, required=True, help='原始图像目录')
+    parser.add_argument('--input_labels_dir', type=str, required=True, help='原始标注目录') 
+    parser.add_argument('--output_dir', type=str, required=True, help='增强后数据集目录')
+    parser.add_argument('--augmentations_per_train_image', type=int, required=True, help='每张图片增强次数')
+    parser.add_argument('--augmentations_per_val_image', type=int, required=True, help='每张图片增强次数')
     args = parser.parse_args()
     
     # 打印标题
@@ -272,8 +272,8 @@ if __name__ == "__main__":
     )
     
     # 最终统计
-    print("\n="*50)
+    print("\n="*20)
     print(f"训练集: {train_count} 张增强图像")
     print(f"验证集: {val_count} 张增强图像")
-    print(f"测试集: {len(os.listdir('data/test/images'))} 张原始图像")
+    print(f"测试集: {len(os.listdir(args.output_dir+'/test/images'))} 张原始图像")
     print("="*50)

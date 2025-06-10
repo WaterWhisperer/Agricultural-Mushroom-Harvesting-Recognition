@@ -21,8 +21,6 @@ def main():
                         help='摄像头设备ID (默认: 0)')
     parser.add_argument('--show', action='store_true', default=False,
                         help='实时显示检测画面 (默认: False)')
-    # parser.add_argument('--use_cpu', action='store_true', default=True,
-    #                     help='使用CPU推理 (默认: True)')
     args = parser.parse_args()
     
     

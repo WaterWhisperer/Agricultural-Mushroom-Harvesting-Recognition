@@ -141,17 +141,17 @@ def main():
     print("="*50)
     print(f"官方标注文件: {args.gt}")
     print(f"评估模型数量: {len(args.models)}")
-    print("-"*50)
+    print("-"*90)
     
     # 打印表头
-    print(f"{'模型名称':<15}{'综合评分':<10}{'平均IoU':<10}{'精确率':<10}{'召回率':<10}{'F1分数':<10}")
-    print("-"*50)
+    print(f"{'模型名称':<20}{'综合评分':<12}{'平均IoU':<12}{'精确率':<12}{'召回率':<12}{'F1分数':<12}")
+    print("-"*90)
     
     # 打印每个模型的结果
     for name, metrics in results.items():
-        print(f"{name:<15}{metrics['final_score']:.4f}{metrics['mean_iou']:.4f}  "
-              f"{metrics['precision']:.4f}  {metrics['recall']:.4f}  {metrics['f1_score']:.4f}")
-    
+        print(f"{name:<25}{metrics['final_score']:<16.4f}{metrics['mean_iou']:<13.4f}  "
+              f"{metrics['precision']:<15.4f}  {metrics['recall']:<15.4f}  {metrics['f1_score']:<15.4f}")
+
     print("\n详细指标说明:")
     print("- 综合评分: 平均IoU(60%) + F1分数(40%)")
     print("- 平均IoU: 所有图片检测框的平均交并比")

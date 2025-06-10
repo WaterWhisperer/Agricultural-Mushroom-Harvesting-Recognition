@@ -66,7 +66,7 @@ bash run.sh data/images
 ### 性能测试
 
 ```bash
-python src/process.py
+python src/process.py --input_dir your/images/dir
 ```
 
 ### 模型评估

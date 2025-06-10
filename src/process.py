@@ -16,8 +16,6 @@ def process_img(img_path):
     :param img_path: 图片路径
     :return: 检测结果列表
     """
-    # 模型路径
-    model_path = 'weights/mushroom2.0_v8n.pt'
 
     # 只在第一次调用时加载模型，后续调用直接使用已加载的模型
     if not hasattr(process_img, "model"):
