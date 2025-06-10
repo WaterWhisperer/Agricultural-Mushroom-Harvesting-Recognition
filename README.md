@@ -13,15 +13,16 @@
 
 ```plaintext
 .
-├── data/                 # 数据集目录
-├── doc/                  # 文档
-├── scripts/              # 辅助脚本
-├── slide/                # PPT 
-├── src/                  # 项目代码
-├── video/                # 演示视频
-├── weights/              # 模型权重文件
-├── README.md             # 项目说明文档
-└── run.sh                # 启动脚本 
+├── data/                     # 数据集目录
+├── doc/                      # 文档
+├── scripts/                  # 辅助脚本
+├── slide/                    # PPT 
+├── src/                      # 项目代码
+├── video/                    # 演示视频
+├── weights/                  # 模型权重文件
+├── experimental_report.pdf   # 实验报告
+├── README.md                 # 项目说明文档
+└── run.sh                    # 启动脚本 
 ```
 
 ## 快速开始
