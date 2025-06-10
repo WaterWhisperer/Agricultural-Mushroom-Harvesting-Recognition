@@ -2,6 +2,7 @@ import os
 import time
 import sys
 from ultralytics import YOLO
+import torch
 
 #
 #参数:
@@ -18,9 +19,32 @@ def process_img(img_path):
     """
 
     # 只在第一次调用时加载模型，后续调用直接使用已加载的模型
+    # if not hasattr(process_img, "model"):
+    #     model_path = 'weights/mushroom2.0_v8n.pt'
+    #     process_img.model = YOLO(model_path)
+
+    # # 执行检测
+    # results = process_img.model(img_path, device="cpu")
+    
+    # # 提取检测框信息
+    # boxes = results[0].boxes.xywh.cpu().numpy()
+    # mushroom_list = [
+    #     {"x": int(box[0]-box[2]/2), "y": int(box[1]-box[3]/2), "w": int(box[2]), "h": int(box[3])}
+    #     for box in boxes
+    # ]
+    
+    # return mushroom_list
     if not hasattr(process_img, "model"):
-        model_path = 'weights/mushroom2.0_v8n.pt'
-        process_img.model = YOLO(model_path)
+        # 加载原始模型
+        base_model = YOLO('weights/mushroom3.0_v8n.pt')
+        base_model.model.eval()
+        
+        # 加载量化模型的状态字典
+        quantized_state_dict = torch.load('weights/mushroom3.0_v8n_quantized.pt')
+        
+        # 应用量化状态到模型
+        base_model.model.load_state_dict(quantized_state_dict)
+        process_img.model = base_model
 
     # 执行检测
     results = process_img.model(img_path, device="cpu")
