@@ -5,6 +5,7 @@ import albumentations as A
 from tqdm import tqdm
 import random
 import shutil
+import argparse
 
 def load_images_and_annotations(image_dir, label_dir):
     """加载图像和对应的YOLO格式标注"""
@@ -226,42 +227,48 @@ def prepare_test_set(input_img_dir, input_label_dir, output_img_dir, output_labe
 
 if __name__ == "__main__":
     # 配置路径
-    input_image_dir = "data/raw/images"       # 原始图像目录
-    input_label_dir = "data/raw/labels"       # 原始标注目录
+    parser = argparse.ArgumentParser(description="蘑菇图片数据增强工具")
+    parser.add_argument('--input_images_dir', required=True, help='原始图像目录')
+    parser.add_argument('--input_labels_dir', required=True, help='原始标注目录') 
+    parser.add_argument('--output_dir', required=True, help='增强后数据集目录')
+    parser.add_argument('--augmentations_per_train_image', required=True, help='每张图片增强次数')
+    parser.add_argument('--augmentations_per_val_image', required=True, help='每张图片增强次数')
+    args = parser.parse_args()
     
+    # 打印标题
     print("="*50)
     print("蘑菇识别数据增强脚本")
     print("="*50)
     
-    # 创建训练集 (100轮增强，3000张)
-    print("\n生成训练集 (100轮增强):")
+    # 创建训练集 
+    print(f"\n生成训练集({args.augmentations_per_train_image}轮增强):")
     train_count = augment_dataset(
-        input_image_dir,
-        input_label_dir,
-        "data/train/images",
-        "data/train/labels",
-        augmentations_per_image=100,
+        args.input_images_dir,
+        args.input_labels_dir,
+        args.output_dir+"/train/images",
+        args.output_dir+"/train/labels",
+        augmentations_per_image=args.augmentations_per_train_image,
         mode='train'
     )
     
-    # 创建验证集 (20轮增强，600张)
-    print("\n生成验证集 (20轮增强):")
+    # 创建验证集 
+    print(f"\n生成验证集 ({args.augmentations_per_val_image}轮增强):")
     val_count = augment_dataset(
-        input_image_dir,
-        input_label_dir,
-        "data/val/images",
-        "data/val/labels",
-        augmentations_per_image=20,
+        args.input_images_dir,
+        args.input_labels_dir,
+        args.output_dir+"/val/images",
+        args.output_dir+"/val/labels",
+        augmentations_per_image=args.augmentations_per_val_image,
         mode='val'
     )
     
     # 准备测试集 (原始数据)
     print("\n准备测试集 (原始数据):")
     prepare_test_set(
-        input_image_dir,
-        input_label_dir,
-        "data/test/images",
-        "data/test/labels"
+        args.input_images_dir,
+        args.input_labels_dir,
+        args.output_dir+"/test/images",
+        args.output_dir+"/test/labels"
     )
     
     # 最终统计

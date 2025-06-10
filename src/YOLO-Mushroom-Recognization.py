@@ -25,13 +25,6 @@ def main():
     #                     help='使用CPU推理 (默认: True)')
     args = parser.parse_args()
     
-    # 加载模型（只加载一次）
-    model = YOLO(args.model_path)
-    
-    # 设置设备类型
-    device = "cpu" if args.use_cpu else None
-    if device:
-        model.to(device)
     
     results = {}
     

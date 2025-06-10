@@ -40,9 +40,11 @@ conda env create -f scripts/data_augmentation/environment.yaml
 
 # 运行数据增强脚本
 python scripts/data_augmentation/data_augmentation.py \
-  --input_dir data/raw/images \
-  --output_dir data/augmented \
-  --augmentations rotate flip color
+  --input_images_dir data/raw/images \
+  --input_labels_dir data/raw/labels \
+  --output_dir data/augmentation_data \
+  --augmentations_per_train_image 100 \
+  --augmentations_per_val_image 20
 ```
 
 支持的数据增强操作：
@@ -56,18 +58,25 @@ python scripts/data_augmentation/data_augmentation.py \
 ### 模型训练
 
 ```bash
-# 启动训练
+# 查看训练说明
+bash scripts/train/train.sh --help
+
+# 启动训练脚本
 bash scripts/train/train.sh \
-  --model yolov8n.pt \
-  --data data/data.yaml \
-  --epochs 100 \
-  --imgsz 640
+  --models yolov8n,yolov8s \
+  --data path/to/your/data.yaml \
+  --weights path/to/weights/ \
+  --epochs 300 \
+  --imgsz 640 \
+  --batch 16 
+  
 ```
 
 训练参数：
 
 - `--model`：基础模型架构
 - `--data`：数据配置文件路径
+- `--weights`：权重文件路径
 - `--epochs`：训练轮数
 - `--imgsz`：输入图片尺寸
 - `--batch`：批次大小（根据显存调整）
@@ -94,15 +103,22 @@ python scripts/tools/evaluate_models.py \
 ```bash
 # JSON转YOLO格式
 python scripts/tools/json2label.py
+  --json_file_path /your/json/file/path /
+  --output_dir /your/output/dir /
+  --image_width 640 /
+  --image_height 480
 ```
 
 ### 模型转换工具
 
 ```bash
+# 配置工具所需环境
+pip install onnx onnxsim onnxruntime
+
 # 导出为ONNX格式
 python scripts/tools/export_onnx.py \
-  --model weights/mushroom_v8n.pt \
-  --output weights/mushroom_v8n.onnx 
+  --pt_path weights/mushroom_v8n.pt \
+  --onnx_output_path weights/mushroom_v8n.onnx 
 ```
 
 ## 性能优化（待实现）

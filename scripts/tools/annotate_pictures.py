@@ -104,9 +104,9 @@ def process_images_and_labels(image_folder, labels_folder, output_folder, class_
             draw_yolo_bounding_boxes(image_path, label_path, output_path, class_colors)
 
 if __name__ == '__main__':
-    image_folder = 'data/raw/images'
-    labels_folder = 'data/raw/labels'
-    output_folder = 'data/raw/annotated_pictures'
+    image_folder = '123/images'
+    labels_folder = '123/labels'
+    output_folder = '123/annotated_pictures'
     class_names = ['mushroom']  # 支持多类别扩展
     
     process_images_and_labels(image_folder, labels_folder, output_folder, class_names)

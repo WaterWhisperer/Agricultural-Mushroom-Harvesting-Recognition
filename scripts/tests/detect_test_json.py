@@ -50,10 +50,10 @@ def detect_pictures(model_path, input_folder, output_image_folder, output_json_p
     print(f"检测结果已保存至: {output_json_path}")
 
 if __name__ == "__main__":
-    model_path = "weights/best.pt"  # 可替换为具体模型路径
-    input_folder = "data/test/images"
-    output_image_folder = "data/test/detected"
-    output_json_path = "data/test/detections.json"  # JSON输出路径
+    model_path = "weights/mushroom2.0_yolov8n.pt"  # 可替换为具体模型路径
+    input_folder = "test_picture"
+    output_image_folder = "test_detected"
+    output_json_path = "detections.json"  # JSON输出路径
     
     detect_pictures(
         model_path, 
